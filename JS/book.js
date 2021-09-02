@@ -39,7 +39,6 @@ const displayBookInfo = (book) => {
       showingSpinner.textContent = "";
    }
 
-   console.log(book);
    bookInfoContainer.textContent = "";
 
    /* Showing Resutls */
@@ -50,9 +49,6 @@ const displayBookInfo = (book) => {
    <h3 >Total Number Found: ${book.numFound}</h3>
    <h3 >Total Number of Books: ${books.length}</h3>
    </div>
-   
-   
-
    `;
 
    books.forEach((item) => {
@@ -60,8 +56,6 @@ const displayBookInfo = (book) => {
          item.cover_i ? item.cover_i : "10909258"
       }-M.jpg`;
 
-      // const publisherName = books.publisher;
-      // console.log(books.publisher);
       searchField.value = "";
       const div = document.createElement("div");
       div.classList.add("col");
@@ -109,4 +103,5 @@ const displaySpinner = () => {
    `;
    errorMessage.textContent = "";
    countingResults.textContent = "";
+   bookInfoContainer.textContent = "";
 };
