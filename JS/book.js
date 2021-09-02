@@ -2,6 +2,7 @@ const searchField = document.getElementById("search-field");
 const bookInfoContainer = document.getElementById("book-info");
 const errorMessage = document.getElementById("error-message");
 const countingResults = document.getElementById("result-count");
+const showingSpinner = document.getElementById("show-spinner");
 
 /* ------------------------
 Search Book
@@ -10,15 +11,13 @@ Search Book
 const searchBook = () => {
    const searchText = searchField.value;
    searchField.value = "";
-   errorMessage.textContent = "";
-
-   //    console.log(searchFieldText);
 
    // getting information from API
    const url = `https://openlibrary.org/search.json?q=${searchText}`;
    fetch(url)
       .then((res) => res.json())
       .then((data) => displayBookInfo(data));
+   displaySpinner();
 };
 
 /* ------------------------
@@ -26,34 +25,36 @@ Display Search Result
 --------------------------- */
 
 const displayBookInfo = (book) => {
-   console.log(book);
-   bookInfoContainer.textContent = "";
    const books = book.docs;
+   console.log(book);
+
+   /* handling error if user search by a invalid name */
+   if (book.numFound === 0 && books.length === 0) {
+      errorMessage.innerHTML = `
+      <h3 class="bg-danger text-center text-white p-5 rounded-3">
+               Please input a valid name
+            </h3>
+
+      `;
+      showingSpinner.textContent = "";
+   }
 
    console.log(book);
+   bookInfoContainer.textContent = "";
+
    /* Showing Resutls */
+
    countingResults.innerHTML = `
    <div class="bg-success text-center text-white p-5 rounded-3 py-5">
+   
    <h3 >Total Number Found: ${book.numFound}</h3>
    <h3 >Total Number of Books: ${books.length}</h3>
    </div>
    
-
    
+
    `;
 
-   /* Error Handling */
-   if (books.length === 0) {
-      const div = document.createElement("div");
-      div.innerHTML = `
-      <h3 class="bg-danger text-center text-white p-5 rounded-3">
-               Please Input a valid name
-            </h3>
-      `;
-      errorMessage.appendChild(div);
-   }
-
-   countingResults.classList.add("d-block");
    books.forEach((item) => {
       const imgUrl = `https://covers.openlibrary.org/b/id/${
          item.cover_i ? item.cover_i : "10909258"
@@ -93,5 +94,19 @@ const displayBookInfo = (book) => {
     
     `;
       bookInfoContainer.appendChild(div);
+      errorMessage.textContent = "";
+      showingSpinner.textContent = "";
    });
+};
+
+/* Display Loading Spinner */
+const displaySpinner = () => {
+   showingSpinner.innerHTML = `
+   <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+   </div>
+   
+   `;
+   errorMessage.textContent = "";
+   countingResults.textContent = "";
 };

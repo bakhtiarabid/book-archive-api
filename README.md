@@ -2,7 +2,7 @@
 
 ## [Private Repository Link](https://github.com/Programming-Hero-Web-Course4/book-archive-bakhtiarabid)
 
-Please Click this link to see live Website: [https://book-archive-api-abid.netlify.app/](BOOK ARCHIVE ASSIGNMENT)
+Please Click this link to see live Website: [https://book-archive-api-abid.netlify.app/] (BOOK ARCHIVE ASSIGNMENT)
 
 ## API Links
 
